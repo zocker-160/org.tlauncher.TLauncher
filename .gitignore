@@ -1,4 +1,7 @@
+.directory
 .flatpak-builder/
 appdir/
 repo/
+
 *.flatpak
+*.zip
