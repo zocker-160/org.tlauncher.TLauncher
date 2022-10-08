@@ -26,8 +26,15 @@
 
   <screenshots>
     <screenshot type="default">
+      <image>https://github.com/zocker-160/org.tlauncher.TLauncher/blob/master/screenshots/gnome.png</image>
+      <caption>Launcher main screen on GNOME</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/zocker-160/org.tlauncher.TLauncher/blob/master/screenshots/kde.png</image>
+      <caption>Launcher main screen on KDE</caption>
+    </screenshot>
+    <screenshot>
       <image>https://raw.githubusercontent.com/flathub/org.tlauncher.TLauncher/master/screenshots/launcher.png</image>
-      <caption>Launcher main menu</caption>
     </screenshot>
   </screenshots>
 
