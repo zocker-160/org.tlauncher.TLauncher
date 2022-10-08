@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020 TLauncher Inc. -->
 <component type="desktop-application">
   <id>org.tlauncher.TLauncher</id>
   <name>TLauncher</name>
@@ -42,6 +41,7 @@
   </content_rating>
 
   <releases>
+    <release date="2022-07-12" version="2.86" />
     <release date="2020-07-12" version="2.72">
       <description>
         <ul>
@@ -72,5 +72,4 @@
   </releases>
 
   <launchable type="desktop-id">org.tlauncher.TLauncher.desktop</launchable>
-  <update_contact>jurf_at_riseup.net</update_contact>
 </component>

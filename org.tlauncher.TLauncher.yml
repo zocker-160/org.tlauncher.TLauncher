@@ -1,28 +1,29 @@
 app-id: org.tlauncher.TLauncher
-command: tlauncher
-
-base: io.atom.electron.BaseApp
-base-version: '19.08'
-
 runtime: org.freedesktop.Platform
-runtime-version: '19.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.openjdk11
+  - org.freedesktop.Sdk.Extension.openjdk8
 
 tags:
   - proprietary
 
+command: tlauncher
+
 finish-args:
   # Launcher/game files
-  - --persist=.tlauncher
-  - --persist=.minecraft
+  #- --persist=.tlauncher
+  #- --persist=.minecraft
+  - --filesystem=~/.tlauncher
+  - --filesystem=~/.minecraft
+  - --filesystem=~/.config/xsettingsd/xsettingsd.conf:ro
+  - --filesystem=xdg-config/fontconfig:ro
   # X11 + XShm
   - --socket=x11
   - --share=ipc
   # OpenGL
   - --device=dri
-  # Sound/music
+  # Sound
   - --socket=pulseaudio
   # Download game files/multiplayer
   - --share=network
@@ -30,9 +31,10 @@ finish-args:
   - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
   - --env=JAVA_HOME=/app/jre
   - --env=JAVA=/app/jre/bin/java
+  #- --env=_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
 build-options:
-  append-path: /usr/lib/sdk/openjdk11/bin
+  append-path: /usr/lib/sdk/openjdk8/bin
 
 modules:
   # Needed by Minecraft 1.8.2 and up
@@ -51,17 +53,17 @@ modules:
       - -Dwith-daemon=false
       - -Dwith-examples=false
     sources:
-      - type: archive
-        url: https://github.com/FeralInteractive/gamemode/archive/1.5.1.tar.gz
-        sha256: f5b1aae7d8f2d9da5dae828431b6df7757b31de91b5298372e9247f740f204d0
-        size: 72555
+      - type: git
+        url: https://github.com/FeralInteractive/gamemode.git
+        tag: 1.5.1
+        commit: 616dca659afb78be55f0797ac0203c6e0028b8bb
     cleanup:
       - /include
 
   - name: openjdk
     buildsystem: simple
     build-commands:
-      - /usr/lib/sdk/openjdk11/install.sh
+      - /usr/lib/sdk/openjdk8/install.sh
 
   - name: tlauncher
     buildsystem: simple
@@ -74,26 +76,30 @@ modules:
     sources:
       - type: extra-data
         filename: TLauncher.zip
-        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.72.zip
-        sha256: 974583935cc1ec22fa3fa0fc12d90c3963aabe296cc4af03b219379612d28a62
-        size: 4069832
+        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.86.zip
+        sha256: ae123982297f5352c578eb3fcc448b362f67f7c08568a82f6d18d05c422584d8
+        size: 5129025
         x-checker-data:
           type: rotating-url
           url: https://tlauncher.org/jar
           pattern: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-([0-9.]+).zip
+
       - type: script
         dest-filename: apply_extra
         commands:
           - unzip TLauncher.zip
           - rm -f TLauncher.zip
           - mv TLauncher*.jar TLauncher.jar
+
       - type: script
+        dest-filename: tlauncher
         commands:
           - '# Use gamemode if available'
-          - GAMEMODEAUTO="libgamemodeauto.so.0"
-          - export LD_PRELOAD="${GAMEMODEAUTO}${LD_PRELOAD:+:$LD_PRELOAD}"
-          - exec java -jar /app/extra/TLauncher.jar "$@"
-        dest-filename: tlauncher
+          #- GAMEMODEAUTO="libgamemodeauto.so.0"
+          #- export LD_PRELOAD="${GAMEMODEAUTO}${LD_PRELOAD:+:$LD_PRELOAD}"
+          - export LD_PRELOAD="$LD_PRELOAD:/app/lib/libgamemodeauto.so.0"
+          - java -jar /app/extra/TLauncher.jar "$@"
+
       - type: file
         path: org.tlauncher.TLauncher.desktop
       - type: file
