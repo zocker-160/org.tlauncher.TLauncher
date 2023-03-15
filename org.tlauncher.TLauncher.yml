@@ -3,7 +3,7 @@ runtime: org.freedesktop.Platform
 runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.openjdk8
+  - org.freedesktop.Sdk.Extension.openjdk11
 
 tags:
   - proprietary
@@ -34,7 +34,7 @@ finish-args:
   #- --env=_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
 build-options:
-  append-path: /usr/lib/sdk/openjdk8/bin
+  append-path: /usr/lib/sdk/openjdk11/bin
 
 modules:
   # Needed by Minecraft 1.8.2 and up
@@ -49,21 +49,20 @@ modules:
   - name: gamemode
     buildsystem: meson
     config-opts:
-      - -Dwith-systemd=false
-      - -Dwith-daemon=false
+      - -Dwith-sd-bus-provider=no-daemon
       - -Dwith-examples=false
     sources:
       - type: git
         url: https://github.com/FeralInteractive/gamemode.git
-        tag: 1.5.1
-        commit: 616dca659afb78be55f0797ac0203c6e0028b8bb
+        tag: "1.7"
+        commit: 4dc99dff76218718763a6b07fc1900fa6d1dafd9
     cleanup:
       - /include
 
   - name: openjdk
     buildsystem: simple
     build-commands:
-      - /usr/lib/sdk/openjdk8/install.sh
+      - /usr/lib/sdk/openjdk11/install.sh
 
   - name: tlauncher
     buildsystem: simple
@@ -76,9 +75,9 @@ modules:
     sources:
       - type: extra-data
         filename: TLauncher.zip
-        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.86.zip
-        sha256: ae123982297f5352c578eb3fcc448b362f67f7c08568a82f6d18d05c422584d8
-        size: 5129025
+        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.876.zip
+        sha256: 1a91bf186dccdc834269501cb855a85330f83252228fd4833899694492341648
+        size: 6233552
         x-checker-data:
           type: rotating-url
           url: https://tlauncher.org/jar
