@@ -2,6 +2,7 @@
 .flatpak-builder/
 appdir/
 repo/
+build/
 
 *.flatpak
 *.zip
