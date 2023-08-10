@@ -75,9 +75,9 @@ modules:
     sources:
       - type: extra-data
         filename: TLauncher.zip
-        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.876.zip
-        sha256: 1a91bf186dccdc834269501cb855a85330f83252228fd4833899694492341648
-        size: 6233552
+        url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.885.zip
+        sha256: 06fb048dd3bcf2f7743988a5e507139e05d903eed330bcba7eb3ede8320bc555
+        size: 6243565
         x-checker-data:
           type: rotating-url
           url: https://tlauncher.org/jar
