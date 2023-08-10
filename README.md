@@ -24,11 +24,3 @@ cd org.tlauncher.TLauncher
 flatpak-builder --force-clean build/ --user --install org.tlauncher.TLauncher.yml
 ```
 - If successful you should have a TLauncher entry in your start menu
-
-## NOTE
-
-The local flatpak build does not violate TLauncher's terms, which prohibit redistribution, because the `.flatpak` does not actually contain TLauncher itself.
-
-The TLauncher `.jar` will get downloaded during the installation by the user's machine from the official download url. [^1]
-
-[^1]: see flatpak's [documentation](https://docs.flatpak.org/en/latest/conventions.html?highlight=extra-data#exporting-through-extra-data) on the `extra-data` flag

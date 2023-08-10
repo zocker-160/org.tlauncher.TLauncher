@@ -67,14 +67,15 @@ modules:
   - name: tlauncher
     buildsystem: simple
     build-commands:
-      - install -Dm755 -t /app/bin/ apply_extra
-      - install -Dm755 -t /app/bin/ tlauncher
-      - install -Dm644 -t /app/share/applications/ org.tlauncher.TLauncher.desktop
-      - install -Dm644 -t /app/share/icons/hicolor/512x512/apps/ org.tlauncher.TLauncher.png
-      - install -Dm644 -t /app/share/appdata/ org.tlauncher.TLauncher.metainfo.xml
+      - mv TLauncher*.jar TLauncher.jar
+      - install -Dm755 TLauncher.jar -t /app/lib/
+      - install -Dm755 tlauncher -t /app/bin/
+      - install -Dm644 org.tlauncher.TLauncher.desktop -t /app/share/applications/
+      - install -Dm644 org.tlauncher.TLauncher.png -t /app/share/icons/hicolor/512x512/apps/
+      - install -Dm644 org.tlauncher.TLauncher.metainfo.xml -t /app/share/appdata/
     sources:
-      - type: extra-data
-        filename: TLauncher.zip
+      - type: archive
+        dest-filename: TLauncher.zip
         url: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-2.885.zip
         sha256: 06fb048dd3bcf2f7743988a5e507139e05d903eed330bcba7eb3ede8320bc555
         size: 6243565
@@ -84,20 +85,13 @@ modules:
           pattern: https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-([0-9.]+).zip
 
       - type: script
-        dest-filename: apply_extra
-        commands:
-          - unzip TLauncher.zip
-          - rm -f TLauncher.zip
-          - mv TLauncher*.jar TLauncher.jar
-
-      - type: script
         dest-filename: tlauncher
         commands:
           - '# Use gamemode if available'
           #- GAMEMODEAUTO="libgamemodeauto.so.0"
           #- export LD_PRELOAD="${GAMEMODEAUTO}${LD_PRELOAD:+:$LD_PRELOAD}"
           - export LD_PRELOAD="$LD_PRELOAD:/app/lib/libgamemodeauto.so.0"
-          - java -jar /app/extra/TLauncher.jar "$@"
+          - java -jar /app/lib/TLauncher.jar "$@"
 
       - type: file
         path: org.tlauncher.TLauncher.desktop
